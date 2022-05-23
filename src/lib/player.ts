@@ -6,10 +6,10 @@ export enum PubSub {
 };
 
 class Player {
-    name: string,
+    name: string;
     socket: Socket;
     pubSub: PubSub;
-    
+
     constructor({ name, socket, pubSub = PubSub.Subscriber }: { name: string; socket: Socket; pubSub?: PubSub; }){
         this.name = name;
         this.socket = socket;

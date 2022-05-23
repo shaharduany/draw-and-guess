@@ -1,3 +1,3 @@
 declare module 'word-list-json' {
-    export default wordList: string[];
+    export default wordList;
 }
