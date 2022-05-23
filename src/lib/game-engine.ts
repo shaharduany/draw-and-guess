@@ -3,6 +3,13 @@ import Drawer from "./drawer";
 import Gusser from "./guesser";
 import { PubSub } from "./player";
 
+interface InfoMessageI {
+	message: string;
+	role: PubSub;
+	players: number;
+	word?: string;
+}
+
 class GameEngine {
 	drawer: Drawer | undefined;
 	gussers: Gusser[];
@@ -43,11 +50,17 @@ class GameEngine {
 	}
 
 	private sendUpdate(socket: Socket, role: PubSub = PubSub.Subscriber) {
-		socket.send({
+		let info: InfoMessageI = {
 			message: "Game has started",
 			players: this.players,
 			role,
-		});
+		};
+
+		if (role === PubSub.Subscriber) {
+			info.word = "fill it later";
+		}
+
+		socket.send(info);
 	}
 
 	switchTurn() {
@@ -58,12 +71,22 @@ class GameEngine {
 
 		this.drawer = new Drawer(this.gussers[0].socket);
 		this.gussers = this.gussers.slice(1, this.gussers.length);
-
-		if (hold !== undefined) {
-			this.gussers.push(hold);
+		
+        if (hold instanceof Drawer) {
+			this.gussers.push(new Gusser(hold?.socket));
 		}
 
 		return true;
+	}
+
+	streamDrawing(drawing: Object) {
+		this.gussers.map((value) => {
+			value.socket.send({ drawing });
+		});
+	}
+
+	checkAttempt(socket: Socket, attempt: string) {
+		//fill it up later
 	}
 }
 

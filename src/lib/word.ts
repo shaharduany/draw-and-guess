@@ -6,5 +6,7 @@ class Word {
 
     constructor(){
         //build it later
+        this.choice = "";
+        this.words = [""];
     }
 }
