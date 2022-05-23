@@ -8,7 +8,7 @@ class Player {
     socket: WebSocket;
     pubSub: PubSub;
 
-    constructor(name: string, socket:WebSocket, pubSub: PubSub = PubSub.Subscriber){
+    constructor(name: string, socket: WebSocket, pubSub: PubSub = PubSub.Subscriber){
         this.name = name;
         this.socket = socket;
         this.pubSub = pubSub;
