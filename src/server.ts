@@ -25,6 +25,7 @@ class Server {
 	routes() {
         this.io.on("connection", (socket) => {
             this.gameEngine.addPlayer(socket);
+            
             socket.on("disconnect", () => {
                 this.gameEngine.removePlayer(socket);
             });
