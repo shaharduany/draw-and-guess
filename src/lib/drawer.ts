@@ -1,9 +1,10 @@
+import { Socket } from "socket.io";
 import Player, { PubSub } from "./player";
 
 
 class Drawer extends Player {
-    constructor(name: string = "Drawer", socket: WebSocket, pubSub: PubSub = PubSub.Publisher){
-        super(name, socket, pubSub);
+    constructor(socket: Socket){
+        super("Drawer", socket, PubSub.Subscriber);
     }
 }
 

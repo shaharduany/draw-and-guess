@@ -1,3 +1,5 @@
+import { Socket } from "socket.io";
+
 export enum PubSub {
     Publisher = "publisher",
     Subscriber = "subscriber",
@@ -5,10 +7,10 @@ export enum PubSub {
 
 class Player {
     name: string,
-    socket: WebSocket;
+    socket: Socket;
     pubSub: PubSub;
 
-    constructor(name: string, socket: WebSocket, pubSub: PubSub = PubSub.Subscriber){
+    constructor(name: string, socket: Socket, pubSub: PubSub = PubSub.Subscriber){
         this.name = name;
         this.socket = socket;
         this.pubSub = pubSub;

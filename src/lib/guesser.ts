@@ -1,8 +1,9 @@
+import { Socket } from "socket.io";
 import Player from "./player";
 
 class Gusser extends Player {
-    constructor(name: string = "Annonymous", socket:WebSocket){
-        super(name, socket);
+    constructor(socket:Socket){
+        super("Guesser", socket);
     }
 }
 
