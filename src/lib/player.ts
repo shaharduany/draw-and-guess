@@ -9,8 +9,8 @@ class Player {
     name: string,
     socket: Socket;
     pubSub: PubSub;
-
-    constructor(name: string, socket: Socket, pubSub: PubSub = PubSub.Subscriber){
+    
+    constructor({ name, socket, pubSub = PubSub.Subscriber }: { name: string; socket: Socket; pubSub?: PubSub; }){
         this.name = name;
         this.socket = socket;
         this.pubSub = pubSub;

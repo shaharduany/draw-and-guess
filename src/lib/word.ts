@@ -1,12 +1,14 @@
-import { readFile } from "fs";
+import wordList from 'word-list-json';
 
-class Word {
+export default class Word {
     choice: string;
-    words: string[];
 
     constructor(){
-        //build it later
-        this.choice = "";
-        this.words = [""];
+        this.choice = this.shuffleAWord();
+    }
+
+    shuffleAWord(){
+        let index = Math.floor(Math.random() * wordList.length);
+        return wordList[index];
     }
 }

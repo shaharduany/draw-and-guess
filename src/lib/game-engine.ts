@@ -2,6 +2,7 @@ import { Socket } from "socket.io";
 import Drawer from "./drawer";
 import Gusser from "./guesser";
 import { PubSub } from "./player";
+import Word from "./word";
 
 interface InfoMessageI {
 	message: string;
@@ -13,12 +14,16 @@ interface InfoMessageI {
 class GameEngine {
 	drawer: Drawer | undefined;
 	gussers: Gusser[];
+	word: string;
+	wordGenerator: Word;
 	private players: number;
 
 	constructor() {
 		this.gussers = [];
 		this.drawer = undefined;
 		this.players = 0;
+		this.wordGenerator = new Word();
+		this.word = this.wordGenerator.choice;
 	}
 
 	addPlayer(socket: Socket) {
@@ -57,7 +62,7 @@ class GameEngine {
 		};
 
 		if (role === PubSub.Subscriber) {
-			info.word = "fill it later";
+			info.word = this.word;
 		}
 
 		socket.send(info);
@@ -71,11 +76,13 @@ class GameEngine {
 
 		this.drawer = new Drawer(this.gussers[0].socket);
 		this.gussers = this.gussers.slice(1, this.gussers.length);
-		
-        if (hold instanceof Drawer) {
+
+		if (hold instanceof Drawer) {
 			this.gussers.push(new Gusser(hold?.socket));
 		}
 
+		this.wordGenerator.shuffleAWord();
+		this.word = this.wordGenerator.choice;
 		return true;
 	}
 
@@ -86,7 +93,14 @@ class GameEngine {
 	}
 
 	checkAttempt(socket: Socket, attempt: string) {
-		//fill it up later
+		if (attempt === this.word) {
+			socket.send({ message: "Correct", correct: true });
+			this.switchTurn();
+			this.startGame();
+			return;
+		}
+
+		socket.send({ message: "Wrong guess", correct: false });
 	}
 }
 
