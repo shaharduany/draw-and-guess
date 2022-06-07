@@ -5,15 +5,19 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "npx tsc",
-		"start": "node dist/index.js",
-		"dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+		"dev": "concurrently \"ts-loader src/index.ts\" \"cd client && npm start\""
 	},
 	"author": "Shahar Duany",
 	"license": "ISC",
 	"dependencies": {
+		"@types/config": "^0.0.41",
+		"@types/nconf": "^0.10.2",
 		"@types/socket.io": "^3.0.2",
+		"config": "^3.3.7",
+		"cors": "^2.8.5",
 		"express": "^4.18.1",
 		"http": "^0.0.1-security",
+		"nconf": "^0.12.0",
 		"socket.io": "^4.5.1",
 		"word-list-json": "^0.2.0"
 	},
@@ -23,6 +27,7 @@
 		"@types/word-list-json": "^3.0.0",
 		"concurrently": "^7.2.1",
 		"nodemon": "^2.0.16",
+		"ts-node": "^10.8.1",
 		"typescript": "^4.6.4"
 	}
 }

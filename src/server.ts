@@ -16,14 +16,18 @@ class Server {
         this.httpsServer = createServer(this.app);
         this.io = new IoServer(this.httpsServer); 
         this.gameEngine = new GameEngine();
-
+        this.middleware();
         this.routes();
     }
 
-	middleware() {}
+	middleware() {
+        
+    }
 
 	routes() {
         this.io.on("connection", (socket) => {
+            console.log("connected")
+            
             this.gameEngine.addPlayer(socket);
             
             socket.on("ready", () => {
@@ -45,6 +49,7 @@ class Server {
     }
 
 	listen() {
+        console.log("listening");
 		this.httpsServer.listen(this.port);
 	}
 }

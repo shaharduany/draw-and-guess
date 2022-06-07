@@ -4,6 +4,13 @@ import Gusser from "./guesser";
 import { PubSub } from "./player";
 import Word from "./word";
 
+/** Used emits:
+ * 
+ * attempt
+ * info
+ * drawing
+ */
+
 interface InfoMessageI {
 	message: string;
 	role: PubSub;
@@ -65,7 +72,7 @@ class GameEngine {
 			info.word = this.word;
 		}
 
-		socket.send(info);
+		socket.emit("info", info);
 	}
 
 	switchTurn() {
@@ -88,19 +95,19 @@ class GameEngine {
 
 	streamDrawing(drawing: Object) {
 		this.gussers.map((value) => {
-			value.socket.send({ drawing });
+			value.socket.emit("drawing", drawing);
 		});
 	}
 
 	checkAttempt(socket: Socket, attempt: string) {
 		if (attempt === this.word) {
-			socket.send({ message: "Correct", correct: true });
+			socket.emit("attempt", { message: "Correct", correct: true });
 			this.switchTurn();
 			this.startGame();
 			return;
 		}
 
-		socket.send({ message: "Wrong guess", correct: false });
+		socket.emit("attempt", { message: "Wrong guess", correct: false });
 	}
 }
 
