@@ -1,21 +1,18 @@
-import React, { useState } from "react";
-import { io } from "socket.io-client";
+import React from "react";
+import { io, Socket } from "socket.io-client";
 
-function App() {
-	const [message, setMessage] = useState("");
-	let socket = io("http://localhost:4000");
+const App: React.FC = () => {
+	let socket: Socket = io("localhost:4000");
 
 	socket.on("connect", () => {
-		setMessage("CONNECTED");
+		console.log("connected");
 	});
 
 	return (
 		<div className="App">
-      <h1>ALLLLLLLL</h1>
-      <button>HELLO </button>
-			<h1>{message}</h1>
+			<h1>Testing sockets</h1>
 		</div>
 	);
-}
+};
 
 export default App;

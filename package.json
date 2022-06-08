@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "npx tsc",
-		"dev": "concurrently \"ts-loader src/index.ts\" \"cd client && npm start\""
+		"dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\" \"cd client && npm start\""
 	},
 	"author": "Shahar Duany",
 	"license": "ISC",

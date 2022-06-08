@@ -7,22 +7,30 @@ const express_1 = __importDefault(require("express"));
 const http_1 = require("http");
 const socket_io_1 = require("socket.io");
 const game_engine_1 = __importDefault(require("./lib/game-engine"));
+const cors_1 = __importDefault(require("cors"));
+const CLIENT_URL = "http://localhost:3000";
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || 4000;
         this.httpsServer = (0, http_1.createServer)(this.app);
-        this.io = new socket_io_1.Server(this.httpsServer);
+        this.io = new socket_io_1.Server(this.httpsServer, {
+            cors: {
+                origin: CLIENT_URL,
+                methods: ["GET", "POST"],
+            },
+        });
         this.gameEngine = new game_engine_1.default();
         this.middleware();
         this.routes();
     }
     middleware() {
+        this.app.use((0, cors_1.default)());
     }
     routes() {
         this.io.on("connection", (socket) => {
-            console.log("connected");
-            this.gameEngine.addPlayer(socket);
+            console.log(`connected`);
+            //this.gameEngine.addPlayer(socket);
             socket.on("ready", () => {
                 this.gameEngine.startGame();
             });
@@ -39,7 +47,9 @@ class Server {
     }
     listen() {
         console.log("listening");
-        this.httpsServer.listen(this.port);
+        this.httpsServer.listen(this.port, () => {
+            console.log("listening on " + this.port);
+        });
     }
 }
 exports.default = Server;
