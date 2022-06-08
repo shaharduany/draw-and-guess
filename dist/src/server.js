@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const http_1 = require("http");
 const socket_io_1 = require("socket.io");
 const game_engine_1 = __importDefault(require("./lib/game-engine"));
-const cors_1 = __importDefault(require("cors"));
 const CLIENT_URL = "http://localhost:3000";
 class Server {
     constructor() {
@@ -24,13 +23,10 @@ class Server {
         this.middleware();
         this.routes();
     }
-    middleware() {
-        this.app.use((0, cors_1.default)());
-    }
+    middleware() { }
     routes() {
         this.io.on("connection", (socket) => {
-            console.log(`connected`);
-            //this.gameEngine.addPlayer(socket);
+            this.gameEngine.addPlayer(socket);
             socket.on("ready", () => {
                 this.gameEngine.startGame();
             });
