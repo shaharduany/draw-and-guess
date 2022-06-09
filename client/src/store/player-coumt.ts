@@ -23,7 +23,7 @@ export function updateCount(count: number): PlayerCountReducerI {
 export default function playerCount(
 	state: PlayerCountT = DEFAULT_COUNT,
 	action: PlayerCountReducerI
-) {
+): PlayerCountT {
 	switch (action.type) {
 		case "NEW_COUNT":
 			state.playerCount = action.newCount!;

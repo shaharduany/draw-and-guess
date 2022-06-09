@@ -29,7 +29,7 @@ export function changeRole(role: Role): PlayerReducerI {
 export default function player(
 	state: PlayerT = DEFAULT,
 	action: PlayerReducerI
-) {
+): PlayerT {
 	switch (action.type) {
 		case "UPDATE_ROLE":
 			state.role = action.role!;
