@@ -1,24 +1,34 @@
 import { ReducerI } from "./root";
 
-
-const DEFAULT_COUNT = 0;
-
-interface PlayerCountI extends ReducerI{
-    type: "NEW_COUNT";
-    newCount?: number;
+export interface PlayerCountT {
+	playerCount: number;
 }
 
-export function updateCount(count: number): PlayerCountI{
-    return {
-        type: "NEW_COUNT",
-        newCount: count,
-    }
+interface PlayerCountReducerI extends ReducerI {
+	type: "NEW_COUNT";
+	newCount?: number;
 }
 
-export default function playerCount(state: number = DEFAULT_COUNT, action: PlayerCountI){
-    switch(action.type){
-       case "NEW_COUNT":
-           state = action.newCount!;
-           break;
-    }
+const DEFAULT_COUNT: PlayerCountT = {
+	playerCount: 0,
+};
+
+export function updateCount(count: number): PlayerCountReducerI {
+	return {
+		type: "NEW_COUNT",
+		newCount: count,
+	};
+}
+
+export default function playerCount(
+	state: PlayerCountT = DEFAULT_COUNT,
+	action: PlayerCountReducerI
+) {
+	switch (action.type) {
+		case "NEW_COUNT":
+			state.playerCount = action.newCount!;
+			return state;
+        default: 
+            return state;
+	}
 }

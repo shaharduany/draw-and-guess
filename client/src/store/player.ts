@@ -6,12 +6,18 @@ enum Role {
 	DRAWER = "DRAWER",
 }
 
-const DEFAULT = Role.waiting;
-
 interface PlayerReducerI extends ReducerI {
 	type: "UPDATE_ROLE";
 	role?: Role;
 }
+
+export interface PlayerT {
+	role: Role;
+}
+
+const DEFAULT: PlayerT = {
+	role: Role.waiting,
+};
 
 export function changeRole(role: Role): PlayerReducerI {
 	return {
@@ -20,10 +26,15 @@ export function changeRole(role: Role): PlayerReducerI {
 	};
 }
 
-export default function player(state: Role = DEFAULT, action: PlayerReducerI) {
+export default function player(
+	state: PlayerT = DEFAULT,
+	action: PlayerReducerI
+) {
 	switch (action.type) {
 		case "UPDATE_ROLE":
-			state = action.role!;
-			break;
+			state.role = action.role!;
+			return state;
+		default:
+			return state;
 	}
 }

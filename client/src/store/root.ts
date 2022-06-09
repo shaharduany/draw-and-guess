@@ -1,9 +1,14 @@
 import { combineReducers } from "redux";
-import player from "./player";
-import playerCount from "./player-coumt";
+import player, { PlayerT } from "./player";
+import playerCount, { PlayerCountT } from "./player-coumt";
 
 export interface ReducerI {
 	type: string;
+}
+
+export interface RootStateI {
+	player: PlayerT;
+	playerCount: PlayerCountT;
 }
 
 const rootReducer = combineReducers({
