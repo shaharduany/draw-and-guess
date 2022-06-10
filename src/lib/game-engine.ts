@@ -4,7 +4,11 @@ import Gusser from "./guesser";
 import { PubSub } from "./player";
 import Word from "./word";
 
-/** Used emits:
+/**Send emits
+ * 
+ * 
+ * 
+ *  Used emits:
  * 
  * attempt
  * info

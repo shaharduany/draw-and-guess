@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootStateI } from "../store/root";
 
 const Header: React.FC = () => {
-	const player = useSelector((state: RootStateI) => state.player);
-
 	return (
 		<div>
-			<h1>{player.role}</h1>
+			<h1>hello</h1>
 		</div>
 	);
 };

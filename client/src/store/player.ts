@@ -1,9 +1,9 @@
 import { ReducerI } from "./root";
 
-enum Role {
+export enum Role {
 	waiting = "WAITING",
 	guesser = "GUESSER",
-	DRAWER = "DRAWER",
+	drawer = "DRAWER",
 }
 
 interface PlayerReducerI extends ReducerI {

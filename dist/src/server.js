@@ -28,8 +28,7 @@ class Server {
         this.io.on("connection", (socket) => {
             this.gameEngine.addPlayer(socket);
             socket.on("ready", () => {
-                console.log("got ready");
-                //	this.gameEngine.startGame();
+                this.gameEngine.startGame();
             });
             socket.on("draw", (drawing) => {
                 this.gameEngine.streamDrawing(drawing);

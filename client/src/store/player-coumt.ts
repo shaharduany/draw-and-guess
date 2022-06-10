@@ -1,17 +1,12 @@
 import { ReducerI } from "./root";
 
-export interface PlayerCountT {
-	playerCount: number;
-}
 
 interface PlayerCountReducerI extends ReducerI {
 	type: "NEW_COUNT";
 	newCount?: number;
 }
 
-const DEFAULT_COUNT: PlayerCountT = {
-	playerCount: 0,
-};
+const DEFAULT_COUNT = 0;
 
 export function updateCount(count: number): PlayerCountReducerI {
 	return {
@@ -21,12 +16,12 @@ export function updateCount(count: number): PlayerCountReducerI {
 }
 
 export default function playerCount(
-	state: PlayerCountT = DEFAULT_COUNT,
+	state: number = DEFAULT_COUNT,
 	action: PlayerCountReducerI
-): PlayerCountT {
+): number {
 	switch (action.type) {
 		case "NEW_COUNT":
-			state.playerCount = action.newCount!;
+			state = action.newCount!;
 			return state;
         default: 
             return state;

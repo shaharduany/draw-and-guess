@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
-import { io, Socket } from "socket.io-client";
+import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { io } from 'socket.io-client';
 import Header from "./components/Header";
 import Home from "./components/home/Home";
-import { useDispatch } from "react-redux";
 import { assignSocket } from "./store/socket-reducer";
+
 const App: React.FC = () => {
-	
+	const dispatch = useDispatch();
+	let socket = io("localhost:4000");
+	useEffect(() => {
+		if(socket.connected){
+			dispatch(assignSocket(socket));
+		}
+	}, [socket.connected, dispatch])
 	return (
 		<div className="App">
 			<Router>

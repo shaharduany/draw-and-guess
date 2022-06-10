@@ -36,8 +36,7 @@ class Server {
 
 	
 			socket.on("ready", () => {
-				console.log("got ready");
-				//	this.gameEngine.startGame();
+				this.gameEngine.startGame();
 			});
 
 			socket.on("draw", (drawing: Object) => {

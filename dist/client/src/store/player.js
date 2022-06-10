@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changeRole = void 0;
+exports.changeRole = exports.Role = void 0;
 var Role;
 (function (Role) {
     Role["waiting"] = "WAITING";
     Role["guesser"] = "GUESSER";
-    Role["DRAWER"] = "DRAWER";
-})(Role || (Role = {}));
+    Role["drawer"] = "DRAWER";
+})(Role = exports.Role || (exports.Role = {}));
 const DEFAULT = {
     role: Role.waiting,
 };

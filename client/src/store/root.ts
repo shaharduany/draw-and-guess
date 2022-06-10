@@ -1,7 +1,7 @@
-import { combineReducers } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import { Socket } from "socket.io-client";
 import player, { PlayerT } from "./player";
-import playerCount, { PlayerCountT } from "./player-coumt";
+import playerCount from "./player-coumt";
 import userSocket  from "./socket-reducer";
 
 export interface ReducerI {
@@ -10,14 +10,15 @@ export interface ReducerI {
 
 export interface RootStateI {
 	player: PlayerT;
-	playerCount: PlayerCountT;
+	playerCount: number;
 	userSocket: Socket;
 }
 
-const rootReducer = combineReducers({
+const rootReducer = {
 	player,
 	playerCount,
-	userSocket,
-});
+}
 
-export default rootReducer;
+const store = configureStore({ reducer: rootReducer });
+
+export default store;
