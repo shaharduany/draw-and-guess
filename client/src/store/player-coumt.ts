@@ -4,9 +4,7 @@ export interface PlayerCountT {
 	count: number;
 }
 
-interface NewCount{
-	count: number;
-}
+type NewCount = number;
 
 const initialState: PlayerCountT = { count: 0 };
 
@@ -15,7 +13,7 @@ const playerCount = createSlice({
 	initialState,
 	reducers: {
 		updateCount(state: PlayerCountT, action: PayloadAction<NewCount>){
-			state.count = action.payload.count;
+			state.count = action.payload;
 		}
 	}
 });

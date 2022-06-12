@@ -3,8 +3,6 @@ import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { Socket } from "socket.io-client";
 import player, { PlayerT } from "./player";
 import playerCount, { PlayerCountT } from "./player-coumt";
-import userSocket from "./socket-reducer";
-import thunk from "redux-thunk";
 
 export interface ReducerI {
 	type: string;

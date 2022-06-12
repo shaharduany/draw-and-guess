@@ -7,7 +7,7 @@ export enum Role {
 	drawer = "DRAWER",
 }
 
-interface PlayerT {
+export interface PlayerT {
 	role: Role;
 }
 

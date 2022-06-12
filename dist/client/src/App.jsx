@@ -4,22 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
-const react_redux_1 = require("react-redux");
 const react_router_dom_1 = require("react-router-dom");
-const socket_io_client_1 = require("socket.io-client");
 const Header_1 = __importDefault(require("./components/Header"));
 const Home_1 = __importDefault(require("./components/home/Home"));
-const routes_scripts_1 = require("./script/routes-scripts");
-const socket_reducer_1 = require("./store/socket-reducer");
+const socket_client_1 = __importDefault(require("./script/socket-client"));
 const App = () => {
-    const dispatch = (0, react_redux_1.useDispatch)();
-    let socket = (0, socket_io_client_1.io)("localhost:4000");
-    socket.on("connect", () => {
-        console.log("here");
-        dispatch((0, socket_reducer_1.assignSocket)(socket));
-        (0, routes_scripts_1.setupRoutess)(socket);
-        socket.emit("ready");
-    });
+    new socket_client_1.default();
     return (<div className="App">
 			<react_router_dom_1.BrowserRouter>
 				<Header_1.default />

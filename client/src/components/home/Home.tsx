@@ -1,12 +1,11 @@
 import React, { MouseEvent } from "react";
-import store from "../../store/root";
-import { sendReady } from "../../store/socket-reducer";
+import SocketClient from "../../script/socket-client";
 
 const Home: React.FC = () => {
 
 	const readyClickHandler = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		store.dispatch(sendReady());
+		SocketClient.emit("ready", () => console.log("sent ready"));
 	};
 
 	return (
