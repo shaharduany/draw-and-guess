@@ -33,9 +33,9 @@ class Server {
 	routes() {
 		this.io.on("connection", (socket) => {
 			this.gameEngine.addPlayer(socket);
-
-	
+			
 			socket.on("ready", () => {
+				console.log("got ready")
 				this.gameEngine.startGame();
 			});
 

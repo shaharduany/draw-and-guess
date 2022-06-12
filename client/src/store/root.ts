@@ -1,24 +1,27 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { Socket } from "socket.io-client";
 import player, { PlayerT } from "./player";
-import playerCount from "./player-coumt";
-import userSocket  from "./socket-reducer";
+import playerCount, { PlayerCountT } from "./player-coumt";
+import userSocket from "./socket-reducer";
+import thunk from "redux-thunk";
 
 export interface ReducerI {
 	type: string;
 }
 
-export interface RootStateI {
+interface RootState {
 	player: PlayerT;
-	playerCount: number;
+	playerCount: PlayerCountT;
 	userSocket: Socket;
 }
 
-const rootReducer = {
-	player,
-	playerCount,
-}
+const store = configureStore({
+	reducer: {
+		player,
+		playerCount
+	}
+})
 
-const store = configureStore({ reducer: rootReducer });
-
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;

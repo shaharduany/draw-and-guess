@@ -1,29 +1,24 @@
-import { ReducerI } from "./root";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
-interface PlayerCountReducerI extends ReducerI {
-	type: "NEW_COUNT";
-	newCount?: number;
+export interface PlayerCountT {
+	count: number;
 }
 
-const DEFAULT_COUNT = 0;
-
-export function updateCount(count: number): PlayerCountReducerI {
-	return {
-		type: "NEW_COUNT",
-		newCount: count,
-	};
+interface NewCount{
+	count: number;
 }
 
-export default function playerCount(
-	state: number = DEFAULT_COUNT,
-	action: PlayerCountReducerI
-): number {
-	switch (action.type) {
-		case "NEW_COUNT":
-			state = action.newCount!;
-			return state;
-        default: 
-            return state;
+const initialState: PlayerCountT = { count: 0 };
+
+const playerCount = createSlice({
+	name: "playerCount",
+	initialState,
+	reducers: {
+		updateCount(state: PlayerCountT, action: PayloadAction<NewCount>){
+			state.count = action.payload.count;
+		}
 	}
-}
+});
+
+export const { updateCount } = playerCount.actions;
+export default playerCount.reducer;

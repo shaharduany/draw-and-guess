@@ -1,3 +1,4 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ReducerI } from "./root";
 
 export enum Role {
@@ -6,35 +7,24 @@ export enum Role {
 	drawer = "DRAWER",
 }
 
-interface PlayerReducerI extends ReducerI {
-	type: "UPDATE_ROLE";
-	role?: Role;
-}
-
-export interface PlayerT {
+interface PlayerT {
 	role: Role;
 }
 
-const DEFAULT: PlayerT = {
-	role: Role.waiting,
-};
-
-export function changeRole(role: Role): PlayerReducerI {
-	return {
-		type: "UPDATE_ROLE",
-		role,
-	};
+interface RoleUpdateT {
+	role: Role;
 }
 
-export default function player(
-	state: PlayerT = DEFAULT,
-	action: PlayerReducerI
-): PlayerT {
-	switch (action.type) {
-		case "UPDATE_ROLE":
-			state.role = action.role!;
-			return state;
-		default:
-			return state;
+const initialState: PlayerT = { role: Role.waiting };
+
+const player = createSlice({
+	name: "player",
+	initialState,
+	reducers: {
+		updateRole(state: PlayerT, action: PayloadAction<RoleUpdateT>){
+			state.role = action.payload.role;
+		}
 	}
-}
+})
+export const { updateRole } = player.actions;
+export default player.reducer;
