@@ -7,9 +7,7 @@ const react_1 = __importDefault(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const Header_1 = __importDefault(require("./components/Header"));
 const Home_1 = __importDefault(require("./components/home/Home"));
-const socket_client_1 = __importDefault(require("./script/socket-client"));
 const App = () => {
-    new socket_client_1.default();
     return (<div className="App">
 			<react_router_dom_1.BrowserRouter>
 				<Header_1.default />

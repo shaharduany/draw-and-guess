@@ -10,7 +10,9 @@ const App_1 = __importDefault(require("./App"));
 const reportWebVitals_1 = __importDefault(require("./reportWebVitals"));
 const react_redux_1 = require("react-redux");
 const root_1 = __importDefault(require("./store/root"));
+const socket_client_1 = __importDefault(require("./script/socket-client"));
 const root = client_1.default.createRoot(document.getElementById('root'));
+new socket_client_1.default();
 root.render(<react_1.default.StrictMode>
     <react_redux_1.Provider store={root_1.default}>
       <App_1.default />

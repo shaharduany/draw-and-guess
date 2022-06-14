@@ -5,11 +5,11 @@ import { PubSub } from "./player";
 import Word from "./word";
 
 /**Send emits
- * 
- * 
- * 
+ *
+ *
+ *
  *  Used emits:
- * 
+ *
  * attempt
  * info
  * drawing
@@ -27,12 +27,12 @@ class GameEngine {
 	gussers: Gusser[];
 	word: string;
 	wordGenerator: Word;
-	private players: number;
+	private static players: number;
 
 	constructor() {
 		this.gussers = [];
 		this.drawer = undefined;
-		this.players = 0;
+		GameEngine.players = 0;
 		this.wordGenerator = new Word();
 		this.word = this.wordGenerator.choice;
 	}
@@ -43,7 +43,8 @@ class GameEngine {
 		} else {
 			this.gussers.push(new Gusser(socket));
 		}
-		this.players++;
+		GameEngine.players++;
+		console.log(GameEngine.players);
 	}
 
 	removePlayer(socket: Socket) {
@@ -53,26 +54,27 @@ class GameEngine {
 			}
 		}
 		this.gussers.filter((value, index) => value.socket !== socket);
-		this.players--;
+		GameEngine.players--;
 	}
 
 	startGame() {
-		if (this.players < 2 || this.drawer === undefined) {
-			return false;
+		if (this.drawer !== undefined) {
+			this.sendUpdate(this.drawer.socket, PubSub.Publisher);
 		}
-
-		this.sendUpdate(this.drawer.socket, PubSub.Publisher);
 		this.gussers.map((value) => this.sendUpdate(value.socket));
 	}
 
 	private sendUpdate(socket: Socket, role: PubSub = PubSub.Subscriber) {
+		let message =
+			GameEngine.players < 2 ? "Waiting for more players" : "Game has started";
+
 		let info: InfoMessageI = {
-			message: "Game has started",
-			players: this.players,
+			players: GameEngine.players,
 			role,
+			message,
 		};
 
-		if (role === PubSub.Subscriber) {
+		if (role === PubSub.Publisher) {
 			info.word = this.word;
 		}
 

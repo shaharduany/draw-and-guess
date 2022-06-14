@@ -1,5 +1,6 @@
 import { io, Socket } from "socket.io-client";
-import { Role } from "../store/player";
+import { Role, updateRole, updateWord } from "../store/player";
+import { updateCount } from "../store/player-coumt";
 import store from "../store/root";
 
 interface EmitResponseI {
@@ -9,8 +10,8 @@ interface EmitResponseI {
 interface InfoI {
 	message: string;
 	players: number;
-	role: "Publisher" | "Subscriber";
-	word?: string;
+	role: "publisher" | "subscriber";
+	word: string;
 }
 
 interface AttemptI {
@@ -27,8 +28,14 @@ export default class SocketClient {
         SocketClient.socket.on("info", (info: InfoI) => {
             const newCount = info.players;
             
-            let flag = info.role === "Publisher";
+            let flag = info.role === "publisher";
             const role = flag ? Role.drawer : Role.guesser;
+            console.log(info);
+            store.dispatch(updateCount(newCount));
+            store.dispatch(updateRole(role));
+            if(flag){
+                store.dispatch(updateWord(info.word))
+            }
         });
     }
 

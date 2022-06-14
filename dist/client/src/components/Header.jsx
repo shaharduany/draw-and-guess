@@ -8,9 +8,12 @@ const root_1 = require("../store/root");
 const Header = () => {
     const player = (0, root_1.useTypedSelector)(state => state.player);
     const playerCount = (0, root_1.useTypedSelector)(state => state.playerCount);
+    let word = "";
+    if (player.word) {
+        word = player.word;
+    }
     return (<div>
-			<h1>hello</h1>
-			<h1>{player.role} {playerCount.count}</h1>
+			<h1>{player.role} {playerCount.count} {word && word}</h1>
 		</div>);
 };
 exports.default = Header;

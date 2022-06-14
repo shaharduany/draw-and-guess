@@ -9,22 +9,25 @@ export enum Role {
 
 export interface PlayerT {
 	role: Role;
+	word?: string;
 }
 
-interface RoleUpdateT {
-	role: Role;
-}
 
-const initialState: PlayerT = { role: Role.waiting };
+const initialState: PlayerT = {
+	role: Role.waiting,
+};
 
 const player = createSlice({
 	name: "player",
 	initialState,
 	reducers: {
-		updateRole(state: PlayerT, action: PayloadAction<RoleUpdateT>){
-			state.role = action.payload.role;
+		updateRole(state: PlayerT, action: PayloadAction<Role>) {
+			state.role = action.payload;
+		},
+		updateWord(state: PlayerT, action: PayloadAction<string>){
+			state.word = action.payload;
 		}
-	}
-})
-export const { updateRole } = player.actions;
+	},
+});
+export const { updateRole, updateWord } = player.actions;
 export default player.reducer;

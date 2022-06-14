@@ -5,8 +5,6 @@ import Home from "./components/home/Home";
 import SocketClient from "./script/socket-client";
 
 const App: React.FC = () => {
-	new SocketClient();
-	
 	return (
 		<div className="App">
 			<Router>

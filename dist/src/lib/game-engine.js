@@ -11,7 +11,7 @@ class GameEngine {
     constructor() {
         this.gussers = [];
         this.drawer = undefined;
-        this.players = 0;
+        GameEngine.players = 0;
         this.wordGenerator = new word_1.default();
         this.word = this.wordGenerator.choice;
     }
@@ -22,7 +22,8 @@ class GameEngine {
         else {
             this.gussers.push(new guesser_1.default(socket));
         }
-        this.players++;
+        GameEngine.players++;
+        console.log(GameEngine.players);
     }
     removePlayer(socket) {
         if (this.drawer instanceof drawer_1.default && this.drawer.socket === socket) {
@@ -31,22 +32,22 @@ class GameEngine {
             }
         }
         this.gussers.filter((value, index) => value.socket !== socket);
-        this.players--;
+        GameEngine.players--;
     }
     startGame() {
-        if (this.players < 2 || this.drawer === undefined) {
-            return false;
+        if (this.drawer !== undefined) {
+            this.sendUpdate(this.drawer.socket, player_1.PubSub.Publisher);
         }
-        this.sendUpdate(this.drawer.socket, player_1.PubSub.Publisher);
         this.gussers.map((value) => this.sendUpdate(value.socket));
     }
     sendUpdate(socket, role = player_1.PubSub.Subscriber) {
+        let message = GameEngine.players < 2 ? "Waiting for more players" : "Game has started";
         let info = {
-            message: "Game has started",
-            players: this.players,
+            players: GameEngine.players,
             role,
+            message,
         };
-        if (role === player_1.PubSub.Subscriber) {
+        if (role === player_1.PubSub.Publisher) {
             info.word = this.word;
         }
         socket.emit("info", info);
